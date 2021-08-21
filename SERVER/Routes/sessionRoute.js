@@ -10,6 +10,8 @@ sessionRouter.get("/sessions",SessionController.getAllSessions);
 sessionRouter.get("/:id",SessionController.getOneSession);
 sessionRouter.patch("/:id",SessionController.updateSession);
 sessionRouter.delete("/:id",SessionController.deleteSession);
+sessionRouter.patch("/id/statusApprove",SessionController.updateSessionApprove);
+sessionRouter.patch("/id/statusDecline",SessionController.updateStatusDecline);
 
 
 export default sessionRouter;
