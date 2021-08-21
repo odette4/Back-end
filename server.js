@@ -12,6 +12,15 @@ app.use(bodyParser.json());
 app.use("/Backend/v1/user",userRouter);
 app.use("/Backend/v1/session",sessionRouter);
 
+app.use('/',(req,res)=>{
+    res.status(404).send({
+        status:404,
+        message:"doesnt exist"
+    })
+
+    
+})
+
 const databaseUrl=process.env.DATABASE;
 const port=process.env.PORT;
 
