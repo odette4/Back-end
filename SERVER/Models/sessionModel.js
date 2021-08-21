@@ -2,10 +2,10 @@
 import  mongoose  from "mongoose";
 
 const SessionSchema = new mongoose.Schema({
-    title:String,
+    title: {type:String,required:[true,"the title is required"]},
     description:String,
-    user:String,
-    mentor:String,
+    user: {type:mongoose.Schema.ObjectId, ref:"User"},
+    mentor: {type:mongoose.Schema.ObjectId, ref:"User"},
     timeToStart:String,
     timeToEnd:String,
 
@@ -16,8 +16,19 @@ const SessionSchema = new mongoose.Schema({
         enum:["appending","approve","decline"],
         default:"appending"
 
-    },
+    }
 });
+
+SessionSchema.pre(/^find/, function(next){
+    this.populate({
+        path:"user",
+        select:"firtName lastName email phone gender"
+    }).populate({
+        path:"mentor",
+        select:"firstName lastName email phone gender"
+    });
+    next();
+})
 const SessionInfo = mongoose.model('Session',SessionSchema);
 
 export default SessionInfo;

@@ -70,6 +70,48 @@ class SessionController{
             data:session
         })
     }
+
+    static updateStatusDecline = async(req,res) =>{
+        const data = await SessionInfo.findById(req.params.id);
+        let status;
+        if(data.status=="pending"){
+            status="decline";
+        }
+        else(status="pending");
+
+        const session = await SessionInfo.findByIdAndUpdate(req.params.id,{status:status});
+        if(!session){
+            return res.status(404).json({
+                status:404,
+                message:"no session available"
+            })
+        }
+        const updatesession = await SessionInfo.findById(req.params.id);
+        return res.status(200).json({
+            status:200,
+            message:"success",
+            data:updatesession
+        });
+    }
+
+
+    static updateSessionApprove = async(req,res)=>{
+        const data = await SessionInfo.findById(req.params.id);
+        let status;
+        if(data.status=="pending"){
+            status="approved";
+
+        }
+        else(status="pending");
+
+        const session = await SessionInfo.findByIdAndUpdate(req.params.id, {status:status});
+        if(!session){
+            return res.status(404).json({
+                status:404,
+                message:"no session available"
+            })
+        }
+    }
     static deleteSession = async(req,res) =>{
         const session = await SessionInfo.findByIdAndDelete(req.params.id);
 
